@@ -3,7 +3,6 @@
   "version": "1.0.0",
   "private": true,
   "main": "index.js",
-
   "scripts": {
     "start": "expo start",
     "web": "expo start --web",
@@ -11,11 +10,11 @@
     "fix:pages": "powershell -Command \"(Get-Content docs/index.html) -replace 'src=\\\"/_expo/', 'src=\\\"./_expo/' | Set-Content docs/index.html\"",
     "deploy": "powershell -Command \"Remove-Item dist -Recurse -Force -ErrorAction SilentlyContinue; Remove-Item docs -Recurse -Force -ErrorAction SilentlyContinue\" && npm run export:web && powershell -Command \"Rename-Item dist docs\" && npm run fix:pages"
   },
-
   "dependencies": {
     "@expo/metro-runtime": "57.0.15",
     "@expo/vector-icons": "15.1.1",
     "expo": "57.0.21",
+    "expo-font": "~57.0.3",
     "expo-status-bar": "57.0.1",
     "react": "19.2.3",
     "react-dom": "19.2.3",
@@ -25,6 +24,5 @@
     "react-native-vector-icons": "10.3.0",
     "react-native-web": "0.21.2"
   },
-
   "devDependencies": {}
 }
