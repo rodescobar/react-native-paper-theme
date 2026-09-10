@@ -1,4 +1,5 @@
 import React, { useMemo, useState } from 'react';
+
 import {
   Platform,
   ScrollView,
@@ -6,6 +7,7 @@ import {
   View,
   useWindowDimensions,
 } from 'react-native';
+
 import {
   Appbar,
   Avatar,
@@ -31,7 +33,9 @@ import {
   Text,
   TextInput,
 } from 'react-native-paper';
+
 import MaterialCommunityIcons from '@expo/vector-icons/MaterialCommunityIcons';
+import { useFonts } from 'expo-font';
 
 const COLOR_FIELDS = [
   ['primary', 'Primary'],
@@ -456,44 +460,103 @@ function AppContent({
 }
 
 export default function App() {
-  const [dark, setDark] = useState(false);
-  const [lightColors, setLightColors] = useState({ ...MD3LightTheme.colors });
-  const [darkColors, setDarkColors] = useState({ ...MD3DarkTheme.colors });
-  const [lightRoundness, setLightRoundness] = useState(MD3LightTheme.roundness);
-  const [darkRoundness, setDarkRoundness] = useState(MD3DarkTheme.roundness);
 
-  const baseTheme = dark ? MD3DarkTheme : MD3LightTheme;
-  const customColors = dark ? darkColors : lightColors;
-  const roundness = dark ? darkRoundness : lightRoundness;
+  const [fontsLoaded] = useFonts(
+    MaterialCommunityIcons.font
+  );
+
+  const [dark, setDark] = useState(false);
+
+  const [lightColors, setLightColors] = useState({
+    ...MD3LightTheme.colors
+  });
+
+  const [darkColors, setDarkColors] = useState({
+    ...MD3DarkTheme.colors
+  });
+
+  const [lightRoundness, setLightRoundness] =
+    useState(MD3LightTheme.roundness);
+
+  const [darkRoundness, setDarkRoundness] =
+    useState(MD3DarkTheme.roundness);
+
+
+  const baseTheme = dark
+    ? MD3DarkTheme
+    : MD3LightTheme;
+
+  const customColors = dark
+    ? darkColors
+    : lightColors;
+
+  const roundness = dark
+    ? darkRoundness
+    : lightRoundness;
+
 
   const theme = useMemo(
     () => ({
       ...baseTheme,
+
       roundness,
+
       colors: {
         ...baseTheme.colors,
         ...customColors,
       },
     }),
-    [baseTheme, customColors, roundness]
+    [
+      baseTheme,
+      customColors,
+      roundness
+    ]
   );
+
+
+  if (!fontsLoaded) {
+    return null;
+  }
+
 
   return (
     <PaperProvider
       theme={theme}
+
       settings={{
-        icon: (props) => <MaterialCommunityIcons {...props} />,
+        icon: ({ name, color, size }) => (
+          <MaterialCommunityIcons
+            name={name}
+            color={color}
+            size={size}
+          />
+        ),
       }}
     >
+
       <AppContent
         dark={dark}
         setDark={setDark}
+
         customColors={customColors}
-        setCustomColors={dark ? setDarkColors : setLightColors}
+
+        setCustomColors={
+          dark
+            ? setDarkColors
+            : setLightColors
+        }
+
         roundness={roundness}
-        setRoundness={dark ? setDarkRoundness : setLightRoundness}
+
+        setRoundness={
+          dark
+            ? setDarkRoundness
+            : setLightRoundness
+        }
+
         theme={theme}
       />
+
     </PaperProvider>
   );
 }
