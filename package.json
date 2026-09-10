@@ -7,8 +7,9 @@
     "start": "expo start",
     "web": "expo start --web",
     "export:web": "expo export --platform web",
-    "fix:pages": "powershell -Command \"(Get-Content docs/index.html) -replace 'src=\\\"/_expo/', 'src=\\\"./_expo/' | Set-Content docs/index.html\"",
-    "deploy": "powershell -Command \"Remove-Item dist -Recurse -Force -ErrorAction SilentlyContinue; Remove-Item docs -Recurse -Force -ErrorAction SilentlyContinue\" && npm run export:web && powershell -Command \"Rename-Item dist docs; New-Item docs/.nojekyll -ItemType File -Force\" && npm run fix:pages"
+    "clean:deploy": "node -e \"const fs=require('fs');fs.rmSync('dist',{recursive:true,force:true});fs.rmSync('docs',{recursive:true,force:true});\"",
+    "prepare:pages": "node -e \"const fs=require('fs');fs.renameSync('dist','docs');fs.writeFileSync('docs/.nojekyll','');const p='docs/index.html';let s=fs.readFileSync(p,'utf8');s=s.replace('src=\\\"/_expo/','src=\\\"./_expo/');fs.writeFileSync(p,s);\"",
+    "deploy": "npm run clean:deploy && npm run export:web && npm run prepare:pages"
   },
   "dependencies": {
     "@expo/metro-runtime": "57.0.15",
