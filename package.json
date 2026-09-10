@@ -8,7 +8,8 @@
     "start": "expo start",
     "web": "expo start --web",
     "export:web": "expo export --platform web",
-    "deploy": "npm run export:web && powershell -Command \"Remove-Item docs -Recurse -Force -ErrorAction SilentlyContinue; Rename-Item dist docs\""
+    "fix:pages": "powershell -Command \"(Get-Content docs/index.html) -replace 'src=\\\"/_expo/', 'src=\\\"./_expo/' | Set-Content docs/index.html\"",
+    "deploy": "powershell -Command \"Remove-Item dist -Recurse -Force -ErrorAction SilentlyContinue; Remove-Item docs -Recurse -Force -ErrorAction SilentlyContinue\" && npm run export:web && powershell -Command \"Rename-Item dist docs\" && npm run fix:pages"
   },
 
   "dependencies": {
