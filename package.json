@@ -3,11 +3,14 @@
   "version": "1.0.0",
   "private": true,
   "main": "index.js",
+
   "scripts": {
     "start": "expo start",
     "web": "expo start --web",
-    "export:web": "expo export --platform web"
+    "export:web": "expo export --platform web",
+    "deploy": "npm run export:web && powershell -Command \"Remove-Item docs -Recurse -Force -ErrorAction SilentlyContinue; Rename-Item dist docs\""
   },
+
   "dependencies": {
     "@expo/metro-runtime": "57.0.15",
     "@expo/vector-icons": "15.1.1",
@@ -21,5 +24,6 @@
     "react-native-vector-icons": "10.3.0",
     "react-native-web": "0.21.2"
   },
+
   "devDependencies": {}
 }
