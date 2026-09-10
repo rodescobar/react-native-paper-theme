@@ -31,6 +31,7 @@ import {
   Text,
   TextInput,
 } from 'react-native-paper';
+import MaterialCommunityIcons from '@expo/vector-icons/MaterialCommunityIcons';
 
 const COLOR_FIELDS = [
   ['primary', 'Primary'],
@@ -124,8 +125,8 @@ export const theme = {
   colors: {
     ...${base}.colors,
 ${Object.entries(colors)
-  .map(([key, value]) => `    ${key}: '${value}',`)
-  .join('\n')}
+      .map(([key, value]) => `    ${key}: '${value}',`)
+      .join('\n')}
   },
 };
 `;
@@ -434,8 +435,8 @@ function AppContent({
                 </Button>
 
                 <View style={styles.fabRow}>
-                  <FAB icon="plus" label="Novo" onPress={() => {}} />
-                  <FAB size="small" icon="pencil" onPress={() => {}} />
+                  <FAB icon="plus" label="Novo" onPress={() => { }} />
+                  <FAB size="small" icon="pencil" onPress={() => { }} />
                 </View>
               </Card.Content>
             </Card>
@@ -478,7 +479,12 @@ export default function App() {
   );
 
   return (
-    <PaperProvider theme={theme}>
+    <PaperProvider
+      theme={theme}
+      settings={{
+        icon: (props) => <MaterialCommunityIcons {...props} />,
+      }}
+    >
       <AppContent
         dark={dark}
         setDark={setDark}
