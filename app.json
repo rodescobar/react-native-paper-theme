@@ -1,0 +1,12 @@
+{
+  "expo": {
+    "name": "React Native Paper Theme Creator",
+    "slug": "react-native-paper-theme-creator",
+    "version": "1.0.0",
+    "orientation": "default",
+    "web": {
+      "bundler": "metro",
+      "output": "single"
+    }
+  }
+}
